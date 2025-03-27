@@ -8,6 +8,7 @@ use App\Models\StudentProfile;
 use App\Models\StudentTeacherRelation;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Models\UserCourseProgress;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ use Illuminate\Validation\Rule;
 use Stripe\Invoice;
 use Stripe\Stripe;
 use Stripe\Subscription;
+use Illuminate\Support\Facades\Response;
 
 class StudentController extends Controller
 {
@@ -31,6 +33,93 @@ class StudentController extends Controller
         $teachers = Teacher::getTeachers(Auth::user()->school_id);
 
         return view('student.index', compact('students', 'teachers'));
+    }
+
+    public function download()
+    {
+        // メイン講師情報を含んだ生徒リスト取得
+        $student = new Student();
+        $students = $student->getPaginatedListWithMainTeacher(Auth::user()->school_id);
+
+        // 講師リスト取得
+        $teachers = Teacher::getTeachers(Auth::user()->school_id);
+
+        return view('student.download', compact('students', 'teachers'));
+    }
+
+    public function csv(Request $request)
+    {
+        $school_id = Auth::user()->school_id;
+        $course_params = $request->input('course', []);
+
+        $print_data = [];
+
+        $course_fields = [
+           'course_name' => '受講研修名',
+           'started_date' => '視聴開始日時',
+           'finished_date' => '視聴終了日時',
+           'played_count' => '進捗ステータス',
+        ];
+
+
+        $columns = ['受講者名'];
+        foreach ($course_params as $course_param) {
+            $columns[] = $course_fields[$course_param];
+        }
+        $print_data[] = $columns;
+
+
+        if($course_params) {
+           $q =  UserCourseProgress::leftJoin('users', 'user_course_progress.user_id', '=', 'users.id')
+               ->leftJoin('courses' , 'user_course_progress.course_id', '=', 'courses.id')
+               ->where('users.school_id' , $school_id)
+               ->orderBy('users.family_name_kana')
+               ->orderBy('users.first_name_kana');
+            $select_sql = "CONCAT(TRIM(family_name), ' ', TRIM(first_name)) as student_name";
+           if(in_array('course_name', $course_params)) {
+               $select_sql .=  ', courses.title';
+           }
+           if(in_array('started_date', $course_params)) {
+               $select_sql .=  ', user_course_progress.first_played_at';
+           }
+           if(in_array('finished_date', $course_params)) {
+               $select_sql .=  ', user_course_progress.last_played_at';
+           }
+           if(in_array('played_count', $course_params)) {
+               $select_sql .=  ', user_course_progress.played_count';
+           }
+
+            $data = $q->selectRaw($select_sql)->get()->toArray();
+        } else {
+            $data = Student::where('role', 'student')
+                ->bySchoolId($school_id)
+                ->where('active', '1')
+                ->orderBy('family_name_kana')
+                ->orderBy('first_name_kana')
+                ->selectRaw("CONCAT(TRIM(family_name), ' ', TRIM(first_name)) as name")
+                ->get()
+                ->toArray();
+        }
+
+        $print_data = array_merge($print_data, $data);
+        $file_name = "生徒リスト".Carbon::now()->format('YmdHis');
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="'.$file_name.'.csv"',
+        ];
+
+        $callback = function () use ($print_data) {
+            $file = fopen('php://output', 'w');
+
+            foreach ($print_data as $row) {
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return Response::stream($callback, 200, $headers);
+
     }
 
     public function search(Request $request)

@@ -63,8 +63,12 @@
                                     @if (Auth::user()->role == 'admin' && $course->post_status != 'publish')
                                         <span class="texticon type-notice">非公開</span>
                                     @endif
-                                    @if (in_array($course->id, $completedCourseIds))
-                                        <span class="texticon type-notice">完了</span>
+                                    @if (key_exists($course->id, $completedCourseIds))
+                                        @if($completedCourseIds[$course->id])
+                                            <span class="texticon type-notice">完了</span>
+                                        @else
+                                            <span class="texticon type-not-yet">未完了</span>
+                                        @endif
                                     @endif
                                     <span class="material-symbols-outlined">
                                         chevron_right

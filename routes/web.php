@@ -60,12 +60,12 @@ Route::middleware('verified')->group(function(){
 
         // スクール情報
         Route::get('/school', [SchoolController::class, 'index'])->name('school.index');
-    
+
         // お問い合わせフォーム
         Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     });
-    
+
     // アクセス制限：管理者
     Route::middleware('can:isAdmin')->group(function(){
         // アカウント発行
@@ -141,9 +141,12 @@ Route::middleware('verified')->group(function(){
         Route::patch('/teacher/update', [TeacherController::class, 'update'])->name('teacher.update');
 
         // 生徒関連
+        Route::get('/student/download', [StudentController::class, 'download'])->name('student.download');
+        Route::post('/student/csv', [StudentController::class, 'csv'])->name('student.csv');
         Route::get('/student', [StudentController::class, 'index'])->name('student.index');
         Route::get('/student/search', [StudentController::class, 'search'])->name('student.search');
         Route::get('/student/{id}', [StudentController::class, 'show'])->name('student.show');
+
 
         // 受講記録関連
         Route::get('/lesson_record/create', [LessonRecordController::class, 'create'])->name('lesson_record.create');
@@ -171,13 +174,13 @@ Route::middleware('verified')->group(function(){
         Route::get('/favorite', [FavoriteController::class, 'index'])->name('favorite.index');
         Route::post('/favorite/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
     });
-    
+
     Route::middleware('check_service_access')->group(function(){
         // 受講記録関連
         Route::get('/lesson_record', [LessonRecordController::class, 'index'])->name('lesson_record.index');
         Route::get('/lesson_record/search', [LessonRecordController::class, 'search'])->name('lesson_record.search');
         Route::get('/lesson_record/{id}', [LessonRecordController::class, 'show'])->name('lesson_record.show');
-        
+
         // アクセス制限：生徒
         Route::middleware('can:isStudent')->group(function(){
             // 動画添削関連
@@ -193,14 +196,14 @@ Route::middleware('verified')->group(function(){
         Route::get('/video_advice/{id}', [VideoAdviceController::class, 'show'])->name('video_advice.show');
         Route::post('/video_advice/comment/create', [VideoAdviceController::class, 'createComment'])->name('video_advice.comment.create');
         Route::post('/video_advice/comment/delete', [VideoAdviceController::class, 'deleteComment'])->name('video_advice.comment.delete');
-    
+
         // 講座関連
         Route::get('/course', [CourseController::class, 'index'])->name('course.index');
         Route::get('/course/{id}', [CourseController::class, 'show'])->name('course.show');
         Route::post('/course/comment/create', [CourseController::class, 'createComment'])->name('course.comment.create');
         Route::post('/course/comment/{courseCommentId}/toggle-like', [CourseController::class, 'toggleCourseCommentLike']);
         Route::post('/course/update_progress', [CourseController::class, 'updateProgress'])->name('course.update_progress');
-    
+
         // フォーラム関連
         Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
         Route::get('/forum/search', [ForumController::class, 'search'])->name('forum.search');

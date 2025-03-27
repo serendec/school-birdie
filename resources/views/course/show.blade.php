@@ -29,23 +29,7 @@
                                     </div>
                                 </div>
                                 <div class="editcase-right">
-                                    @can('isStudent')
-                                        <form action="{{ route('course.update_progress') }}" method="POST" id="form-done">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $course->id }}">
-                                            @if ($isCompleted == 1)
-                                                <input type="hidden" name="is_completed" value="0">
-                                                <button class="button button-secondary" id="button-done" type="submit">
-                                                    <span class="text">完了取消</span>
-                                                </button>
-                                            @else
-                                                <input type="hidden" name="is_completed" value="1">
-                                                <button class="button button-secondary" id="button-done" type="submit">
-                                                    <span class="text">完了</span>
-                                                </button>
-                                            @endif
-                                        </form>
-                                    @elsecan('isTeacher')
+                                    @can('isTeacher')
                                         <a href="{{ route('course.edit', $course->id) }}" class="button button-secondary">
                                             <span class="text">編集</span>
                                         </a>
@@ -56,9 +40,42 @@
 
                         @if (!empty($course->video))
                             <div class="movie pt-0">
-                                <video id="video-player" controls></video>
+                                <video id="video-player"></video>
+                                <button class="play-button" id="playBtn">▶</button>
                             </div>
                         @endif
+
+                        @can('isStudent')
+                            <div class="listbuttons">
+                                <div class="element left">
+                                    @if($previousCourseId)
+                                    <a href="{{ route('course.show', $previousCourseId) }}" class="button button-secondary button-previous"><span class="text">前の講座</span></a>
+                                    @endif
+                                </div>
+                                <div class="btn-complete element">
+                                    <form action="{{ route('course.update_progress') }}" method="POST" id="form-done">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $course->id }}">
+                                        @if ($isCompleted == 1)
+                                            <input type="hidden" name="is_completed" value="0">
+                                            <button class="button button-secondary" id="button-done" type="submit">
+                                                <span class="text">完了</span>
+                                            </button>
+                                        @else
+                                            <input type="hidden" name="is_completed" value="1">
+                                            <button class="button button-secondary" id="button-done" type="submit">
+                                                <span class="text">未完了</span>
+                                            </button>
+                                        @endif
+                                    </form>
+                                </div>
+                                <div class="element right">
+                                    @if($nextCourseId)
+                                    <a href="{{ route('course.show', $nextCourseId) }}" class="button button-secondary button-next"><span class="text">次の講座</span></a>
+                                    @endif
+                                </div>
+                            </div>
+                        @endcan
 
                         <div class="text size-middle block mt-16">
                             {!! Purify::clean($course->content) !!}
@@ -144,13 +161,79 @@
 @section('js-footer')
     @if (!empty($course->video))
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-        <script src="{{ asset('js/hls.js') }}"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // HLS読み込み
                 const videoSrc = "{{ asset('storage/media/course/' . Auth::user()->school_id . '/' . $course->id . '/' . $course->video . '.m3u8') }}";
                 initHls(videoSrc);
             });
+
+            function initHls(videoSrc) {
+                const video = document.getElementById("video-player");
+                const playBtn = document.getElementById("playBtn");
+
+                playBtn.addEventListener("click", () => {
+                    video.play();
+                    playBtn.style.display = "none";
+
+                    $.ajax({
+                        url: '{{ route('course.update_progress') }}',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: '{{ $course->id }}',
+                            type: 'start_play',
+                        },
+                        success: function(response) {
+                            console.log('Success:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Error:', error);
+                        }
+                    });
+                });
+
+                video.addEventListener("seeking", function (event) {
+                    if (video.currentTime > video.played.end(0)) {
+                        video.currentTime = video.played.end(0);
+                    }
+                });
+
+                video.addEventListener("ended", function (event) {
+                    playBtn.style.display = "block";
+
+                    $.ajax({
+                        url: '{{ route('course.update_progress') }}',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: '{{ $course->id }}',
+                            type: 'finish_play',
+                        },
+                        success: function(response) {
+                            console.log('Success:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Error:', error);
+                        }
+                    });
+                });
+
+                video.addEventListener("contextmenu", (event) => event.preventDefault());
+
+                if (Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(videoSrc);
+                    hls.attachMedia(video);
+                } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+                    video.src = videoSrc;
+                } else {
+                    alert("動画再生に対応していないブラウザです。\nお手数でございますが、別のブラウザをご利用ください。");
+                }
+            }
+
         </script>
     @endif
 

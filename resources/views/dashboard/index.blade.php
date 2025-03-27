@@ -50,7 +50,7 @@
                             </a>
                         </div>
                     @endif
-                    
+
                     {{-- <div>
                         <div class="hd-2">今日のおすすめ講座</div>
                         <ul class="buttonlist mt-8">
@@ -282,6 +282,14 @@
                             <div class="hd-2">管理メニュー</div>
                             <nav class="listmenu">
                                 <ul>
+                                    <li>
+                                        <a href="{{ route('student.download') }}" class="button button-secondary width-full">
+                                            <span class="text">CSVダウンロード</span>
+                                            <span class="material-symbols-outlined">
+                                                chevron_right
+                                            </span>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('student.index') }}" class="button button-secondary width-full">
                                             <span class="text">生徒管理</span>

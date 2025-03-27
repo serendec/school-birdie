@@ -21,16 +21,16 @@ class CourseController extends Controller
     {
         // カテゴリ毎の講座一覧を取得
         $categories = CourseCategory::getAllCoursesGroupedByCategory(Auth::user()->school_id, Auth::user()->role);
-        
+
         // 完了した講座IDを取得
-        $completedCourseIds = Auth::user()->UserCourseProgress()->pluck('course_id')->toArray();
+        $completedCourseIds = Auth::user()->UserCourseProgress()->pluck('is_completed','course_id')->toArray();
 
         // 未読の講座コメント通知を取得
         $unreadCourseIds = Auth::user()->unreadNotifications
                                        ->pluck('data.course_id')
                                        ->unique()
                                        ->toArray();
-        
+
         return view('course.index', compact('categories', 'completedCourseIds', 'unreadCourseIds'));
     }
 
@@ -104,20 +104,43 @@ class CourseController extends Controller
                                         ->where('data.category', 'course_comment')
                                         ->pluck('data.comment_id')
                                         ->toArray();
-        
+
         // コメント通知を既読にする
         Auth::user()->unreadNotifications
             ->where('data.category', 'course_comment')
             ->where('data.course_id', $request->id)
             ->markAsRead();
 
+        //講義終了
+        $isWatched = UserCourseProgress::getIsWatchedValue($course->id, Auth::id());
         // 完了ステータスを取得
         $isCompleted = UserCourseProgress::getIsCompletedValue($course->id, Auth::id());
-        
+
         // いいねしたコメントのIDを取得
         $likedCommentIds = Auth::user()->courseCommentLikes()->pluck('course_comment_id');
-        
-        return view('course.show', compact('course', 'isCompleted', 'likedCommentIds', 'unreadCommentIds'));
+
+        $categories = CourseCategory::getAllCoursesGroupedByCategory(Auth::user()->school_id, Auth::user()->role);
+
+        $previousCourseId = null;
+        $currentCourseId = null;
+        $nextCourseId = null;
+        foreach ($categories as $category) {
+            foreach ($category->courses as $curs) {
+                if($currentCourseId) {
+                    $nextCourseId = $curs->id;
+                    break;
+                }
+                if($course->id == $curs->id ) {
+                    $currentCourseId  = $curs->id;
+                } else {
+                    $previousCourseId = $curs->id;
+                }
+
+            }
+        }
+
+
+        return view('course.show', compact('course', 'isWatched', 'isCompleted', 'likedCommentIds', 'unreadCommentIds', 'previousCourseId', 'nextCourseId'));
     }
 
     public function edit(Request $request)
@@ -164,7 +187,7 @@ class CourseController extends Controller
         if ($request->hasFile('video')) {
             $course->uploadVideo($request->file('video'), $course->id, Auth::user()->school_id);
         }
-        
+
         return $this->respond([
             'result' => 'success',
             'msg'    => __('messages.updated_success'),
@@ -181,21 +204,34 @@ class CourseController extends Controller
                 'exists:courses,id',
                 Rule::exists('courses', 'id')->where('school_id', Auth::user()->school_id),
             ],
-            'is_completed' => ['required', 'boolean']
+            'is_completed' => ['nullable', 'boolean']
         ]);
 
-        $course = UserCourseProgress::updateIsCompleted($request, Auth::id());
-        if (!$course){
+
+        if($request->ajax()) {
+            if($request->type == 'start_play') {
+                UserCourseProgress::setFirstPlayedTime($request, Auth::id());
+            }
+
+            if($request->type == 'finish_play') {
+                UserCourseProgress::setLastPlayedTime($request, Auth::id());
+            }
+        } else {
+            $course = UserCourseProgress::updateIsCompleted($request, Auth::id());
+
+            if (!$course){
+                return redirect()->route('course.show', ['id' => $request->id])->with([
+                    'result' => 'error',
+                    'msg'    => __('messages.error')
+                ]);
+            }
+
             return redirect()->route('course.show', ['id' => $request->id])->with([
-                'result' => 'error',
-                'msg'    => __('messages.error')
+                'result' => 'success',
+                'msg'    => __('messages.course_update_progress_success')
             ]);
         }
-        
-        return redirect()->route('course.show', ['id' => $request->id])->with([
-            'result' => 'success',
-            'msg'    => __('messages.course_update_progress_success')
-        ]);
+
     }
 
     public function delete(Request $request)
@@ -227,7 +263,7 @@ class CourseController extends Controller
             'mentioned_user_id' => 'nullable|exists:users,id',
             'body'              => 'required'
         ]);
-        
+
         // コメントを登録
         $courseComment = CourseComment::create([
             'course_id'         => $request->course_id,
@@ -272,7 +308,7 @@ class CourseController extends Controller
         $request->validate([
             'comment_id' => 'required|exists:course_comments,id',
         ]);
-        
+
         // コメントを削除
         CourseComment::deleteComment($request->comment_id, Auth::user()->school_id);
 
@@ -285,9 +321,9 @@ class CourseController extends Controller
     {
         // カテゴリ毎の講座一覧を取得
         $categories = CourseCategory::getAllCoursesGroupedByCategory(Auth::user()->school_id, Auth::user()->role);
-        
+
         return view('course.update_order', compact('categories'));
-    }    
+    }
 
     public function updateOrder(Request $request)
     {

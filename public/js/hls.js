@@ -1,5 +1,19 @@
 function initHls(videoSrc) {
     const video = document.getElementById("video-player");
+    const playBtn = document.getElementById("playBtn");
+
+    playBtn.addEventListener("click", () => {
+        video.play();
+        playBtn.style.display = "none";
+    });
+
+    video.addEventListener("seeking", function (event) {
+        if (video.currentTime > video.played.end(0)) {
+            video.currentTime = video.played.end(0);
+        }
+    });
+
+    video.addEventListener("contextmenu", (event) => event.preventDefault());
 
     if (Hls.isSupported()) {
         const hls = new Hls();

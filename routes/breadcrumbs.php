@@ -63,6 +63,9 @@ if (Auth::user() && Auth::user()->role == 'student'){
     } else {
         createBreadcrumb('student.edit', 'student.index', '生徒管理');
     }
+
+    createBreadcrumb('student.download', 'home', 'CSVダウンロード');
+
 }
 
 // 講師関連
