@@ -41,7 +41,22 @@
                         @if (!empty($course->video))
                             <div class="movie pt-0">
                                 <video id="video-player"></video>
-                                <button class="play-button" id="playBtn">▶</button>
+                                <div id="video-controls">
+                                    <button class="play-button" id="playBtn">▶</button>
+                                    <button class="stop-button" id="stopBtn">■</button>
+
+                                    <div class="speed-control" id="speed_control">
+                                        <label for="speedControl">倍速: </label>
+                                        <select id="speedControl">
+                                            <option value="0.5">0.5x</option>
+                                            <option value="1.0" selected>1x</option>
+                                            <option value="1.5">1.5x</option>
+                                            <option value="2.0">2x</option>
+                                            <option value="3.0">3x</option>
+                                            <option value="4.0">4x</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         @endif
 
@@ -170,28 +185,48 @@
 
             function initHls(videoSrc) {
                 const video = document.getElementById("video-player");
+                const videoControls = document.getElementById("video-controls");
                 const playBtn = document.getElementById("playBtn");
+                const stopBtn = document.getElementById("stopBtn");
+                const speedControl = document.getElementById('speedControl');
+
+                videoControls.classList.add('show');
+                playBtn.classList.add('show');
 
                 playBtn.addEventListener("click", () => {
                     video.play();
-                    playBtn.style.display = "none";
+                    playBtn.classList.remove('show');
+                    stopBtn.classList.add('show');
 
-                    $.ajax({
-                        url: '{{ route('course.update_progress') }}',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id: '{{ $course->id }}',
-                            type: 'start_play',
-                        },
-                        success: function(response) {
-                            console.log('Success:', response);
-                        },
-                        error: function(xhr, status, error) {
-                            console.log('Error:', error);
-                        }
-                    });
+                    @can('isStudent')
+                        $.ajax({
+                            url: '{{ route('course.update_progress') }}',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: '{{ $course->id }}',
+                                type: 'start_play',
+                            },
+                            success: function(response) {
+                                console.log('Success:', response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.log('Error:', error);
+                            }
+                        });
+                    @endcan
+                });
+
+                stopBtn.addEventListener("click", () => {
+                    playBtn.classList.add('show');
+                    stopBtn.classList.remove('show');
+                    video.pause();
+                });
+
+                speedControl.addEventListener("change", () => {
+                    const v_speed = Number(speedControl.value);
+                    video.playbackRate = v_speed;
                 });
 
                 video.addEventListener("seeking", function (event) {
@@ -200,25 +235,49 @@
                     }
                 });
 
-                video.addEventListener("ended", function (event) {
-                    playBtn.style.display = "block";
+                video.addEventListener('mouseenter', () => {
+                    if (!video.paused) {
+                        videoControls.classList.add('show');
+                        stopBtn.classList.add('show');
+                    }
+                });
 
-                    $.ajax({
-                        url: '{{ route('course.update_progress') }}',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id: '{{ $course->id }}',
-                            type: 'finish_play',
-                        },
-                        success: function(response) {
-                            console.log('Success:', response);
-                        },
-                        error: function(xhr, status, error) {
-                            console.log('Error:', error);
-                        }
-                    });
+                stopBtn.addEventListener('mouseenter', () => {
+                    if (!video.paused) {
+                        stopBtn.classList.add('show');
+                    }
+                });
+
+                video.addEventListener('mouseleave', () => {
+                    stopBtn.classList.remove('show');
+                    if (!video.paused) {
+                        videoControls.classList.remove('show');
+                    }
+
+                });
+
+                video.addEventListener("ended", function (event) {
+                    playBtn.classList.add('show');
+                    stopBtn.classList.remove('show');
+
+                    @can('isStudent')
+                        $.ajax({
+                            url: '{{ route('course.update_progress') }}',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: '{{ $course->id }}',
+                                type: 'finish_play',
+                            },
+                            success: function(response) {
+                                console.log('Success:', response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.log('Error:', error);
+                            }
+                        });
+                    @endcan
                 });
 
                 video.addEventListener("contextmenu", (event) => event.preventDefault());
