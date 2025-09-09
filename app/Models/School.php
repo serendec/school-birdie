@@ -16,7 +16,7 @@ class School extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'school_name',
         'url',
         'tel',
         'email',
