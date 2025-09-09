@@ -289,7 +289,7 @@ class ForumController extends Controller
         }
 
         $user = Auth::user();
-        $icon = ($user->icon != null) ? '/storage/icons/' . $user->school_id . '/' . $user->icon : null;
+        $icon = ($user->icon != null) ? '/storage/icons/' . $user->school_id . '/' . $user->icon : '/storage/img/default-icon.png';
         $mentionedUserName = (!empty($forumComment->mentionedUser->family_name)) ? $forumComment->mentionedUser->family_name . ' ' . $forumComment->mentionedUser->first_name : null;
 
         return new JsonResponse([

@@ -1,5 +1,5 @@
 @php
-    $top_img_path = (Auth::user()->school->top_img) ? '/storage/img/' . Auth::user()->school_id . '/' . Auth::user()->school->top_img : null;
+    $top_img_path = (Auth::user()->school->top_img) ? '/storage/img/' . Auth::user()->school_id . '/' . Auth::user()->school->top_img : '/storage/img/default-top.jpg';
 @endphp
 <div class="drawer-nav" id="drawer-content">
     <div class="drawer-menu">

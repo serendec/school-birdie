@@ -339,7 +339,7 @@ class VideoAdviceController extends Controller
         }
 
         $user = Auth::user();
-        $icon = ($user->icon != null) ? '/storage/icons/' . $user->school_id . '/' . $user->icon : null;
+        $icon = ($user->icon != null) ? '/storage/icons/' . $user->school_id . '/' . $user->icon : '/storage/img/default-icon.png';
         $mentionedUserName = (!empty($videoAdviceComment->mentionedUser->family_name)) ? $videoAdviceComment->mentionedUser->family_name . ' ' . $videoAdviceComment->mentionedUser->first_name : null;
 
         return new JsonResponse([

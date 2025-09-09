@@ -103,11 +103,10 @@
                                 </label>
                                 <div class="text size-middle block">
                                     <span class="namebox">
-                                        @if($school->top_img)
-                                        <span class="avator size-default" style="background-image:url('/storage/img/' . Auth::user()->school_id . '/' . $school->top_img);border-radius:0;" id="selected_top_img"></span>
-                                        @else
-                                        <span class="avator size-default" style="border-radius:0;" id="selected_top_img"></span>
-                                        @endif
+                                        @php
+                                            $img_path = ($school->top_img) ? '/storage/img/' . Auth::user()->school_id . '/' . $school->top_img : '/storage/img/default-top.jpg';
+                                        @endphp
+                                        <span class="avator size-default" style="background-image:url('{{ $img_path }}');border-radius:0;" id="selected_top_img"></span>
                                         <span class="text size-default mr-8">
                                             <span class="button button-secondary" id="button-select_img_file">
                                                 <span class="text">ファイル選択</span>
