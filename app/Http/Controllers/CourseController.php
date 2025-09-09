@@ -287,7 +287,7 @@ class CourseController extends Controller
         }
 
         $user = Auth::user();
-        $icon = ($user->icon != null) ? '/storage/icons/' . $user->school_id . '/' . $user->icon : '/storage/img/default-icon.png';
+        $icon = ($user->icon != null) ? '/storage/icons/' . $user->school_id . '/' . $user->icon : null;
         $mentionedUserName = (!empty($courseComment->mentionedUser->family_name)) ? $courseComment->mentionedUser->family_name . ' ' . $courseComment->mentionedUser->first_name : null;
 
         return new JsonResponse([

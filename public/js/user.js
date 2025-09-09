@@ -16,7 +16,7 @@ if (buttonSelectFile) {
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            img.style.backgroundImage = '/storage/img/default-icon.png';
+            img.style.backgroundImage = '';
         }
     });
 }
@@ -38,7 +38,7 @@ if (buttonSelectImgFile) {
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            img.style.backgroundImage = '/storage/img/default-top.jpg';
+            img.style.backgroundImage = '';
         }
     });
 }
