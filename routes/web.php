@@ -67,7 +67,7 @@ Route::middleware('verified')->group(function(){
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
         // 特商法ページ
-        Route::get('/tokushoho.html', [TokushohoController::class, 'show'])->name('tokushoho.show');
+        Route::get('/tokushoho', [TokushohoController::class, 'show'])->name('tokushoho.show');
     });
 
     // アクセス制限：管理者
