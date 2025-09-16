@@ -32,7 +32,21 @@ class SchoolController extends Controller
             'tel_available_time' => 'string|nullable',
             'email'              => 'string|max:255|nullable',
             'icon'               => 'image|mimes:png,jpg,jpeg|max:2048|nullable',
-            'top_img'            => 'image|mimes:png,jpg,jpeg|max:2048|nullable'
+            'top_img'            => 'image|mimes:png,jpg,jpeg|max:2048|nullable',
+            'tokushoho_company_name' => 'string|max:255|nullable',
+            'tokushoho_address' => 'string|nullable',
+            'tokushoho_tel' => 'string|max:13|nullable',
+            'tokushoho_email' => 'string|max:255|nullable',
+            'tokushoho_representative' => 'string|max:255|nullable',
+            'tokushoho_additional_fees' => 'string|nullable',
+            'tokushoho_refund_policy' => 'string|nullable',
+            'tokushoho_delivery_time' => 'string|nullable',
+            'tokushoho_payment_method' => 'string|nullable',
+            'tokushoho_payment_period' => 'string|nullable',
+            'tokushoho_price' => 'string|nullable',
+            'tokushoho_validity_period' => 'string|nullable',
+            'tokushoho_sales_quantity' => 'string|nullable',
+            'tokushoho_usage_method' => 'string|nullable'
         ])->validate();
 
         $school = School::updateFromRequest($request, Auth::user()->school_id);
