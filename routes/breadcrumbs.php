@@ -108,7 +108,7 @@ if (isset(request()->route()->id)){
     createBreadcrumb('video_advice.edit', 'video_advice.index', '動画添削');
 }
 
-// ゴルフ講座関連
+// 動画講座関連
 createBreadcrumb('course.index', 'home', 'ホーム');
 createBreadcrumb('course.create', 'course.index', '講座');
 createBreadcrumb('course.show', 'course.index', '講座');
