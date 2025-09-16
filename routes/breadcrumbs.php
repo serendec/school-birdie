@@ -47,6 +47,9 @@ createBreadcrumb('school.index', 'home', 'ホーム');
 createBreadcrumb('school.edit', 'school.index', 'スクール情報');
 createBreadcrumb('school.contract', 'home', 'ホーム');
 
+// 特商法ページ
+createBreadcrumb('tokushoho.show', 'home', 'ホーム');
+
 // お問い合わせ
 createBreadcrumb('contact.create', 'home', 'ホーム');
 
