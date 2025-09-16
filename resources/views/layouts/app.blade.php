@@ -47,16 +47,16 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        
+
         .tokushoho-link {
             color: #007bff;
             text-decoration: none;
         }
-        
+
         .tokushoho-link:hover {
             text-decoration: underline;
         }
-        
+
         @media (max-width: 768px) {
             .site-footer-content {
                 flex-direction: column;
@@ -69,7 +69,7 @@
 
 <body @if (Request::routeIs('home')) id="home" @endif class="drawer drawer--right">
     @include('partials.menu.drawer')
-    
+
     <div class="site-header">
         <div class="site-header-left">
             <div class="namebox">
@@ -104,7 +104,7 @@
             @endforeach
         </div>
     @endif
-    
+
     <main class="site-body">
         @include('partials.message')
         @yield('content')
@@ -113,7 +113,9 @@
     <div class="site-footer">
         <div class="site-footer-content">
             <span class="text size-small"> &copy SERENDEC</span>
-            <a href="{{ route('tokushoho.show') }}" class="text size-small tokushoho-link">特定商取引法に基づく表記</a>
+            @if(Auth::check() && Route::has('tokushoho.show'))
+                <a href="{{ route('tokushoho.show') }}" class="text size-small tokushoho-link">特定商取引法に基づく表記</a>
+            @endif
         </div>
     </div>
 
