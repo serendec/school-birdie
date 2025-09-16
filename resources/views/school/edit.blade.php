@@ -120,6 +120,156 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="detail-content">
+                    <div class="detail-content-header">特定商取引法に基づく表記</div>
+                    <div class="detail-content-body">
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-company-name" class="text size-mini block">
+                                    販売事業所名
+                                </label>
+                                <div class="text size-middle block">
+                                    <input type="text" id="input-tokushoho-company-name" name="tokushoho_company_name" value="{{ old('tokushoho_company_name', $school->tokushoho_company_name) }}" size="40" />
+                                </div>
+                                <div class="text size-mini block">未入力の場合はスクール名が使用されます</div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-address" class="text size-mini block">
+                                    所在地
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_address" id="input-tokushoho-address" rows="3" cols="50">{{ old('tokushoho_address', $school->tokushoho_address) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-tel" class="text size-mini block">
+                                    電話番号
+                                </label>
+                                <div class="text size-middle block">
+                                    <input type="text" id="input-tokushoho-tel" name="tokushoho_tel" value="{{ old('tokushoho_tel', $school->tokushoho_tel) }}" size="13" />
+                                </div>
+                                <div class="text size-mini block">未入力の場合はお問い合わせ先電話番号が使用されます</div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-email" class="text size-mini block">
+                                    メールアドレス
+                                </label>
+                                <div class="text size-middle block">
+                                    <input type="text" id="input-tokushoho-email" name="tokushoho_email" value="{{ old('tokushoho_email', $school->tokushoho_email) }}" size="40" />
+                                </div>
+                                <div class="text size-mini block">未入力の場合はお問い合わせ先メールアドレスが使用されます</div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-representative" class="text size-mini block">
+                                    運営統括責任者
+                                </label>
+                                <div class="text size-middle block">
+                                    <input type="text" id="input-tokushoho-representative" name="tokushoho_representative" value="{{ old('tokushoho_representative', $school->tokushoho_representative) }}" size="40" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-additional-fees" class="text size-mini block">
+                                    追加手数料等の追加料金
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_additional_fees" id="input-tokushoho-additional-fees" rows="2" cols="50">{{ old('tokushoho_additional_fees', $school->tokushoho_additional_fees) }}</textarea>
+                                </div>
+                                <div class="text size-mini block">未入力の場合は「なし」が表示されます</div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-refund-policy" class="text size-mini block">
+                                    返金ポリシー
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_refund_policy" id="input-tokushoho-refund-policy" rows="3" cols="50">{{ old('tokushoho_refund_policy', $school->tokushoho_refund_policy) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-delivery-time" class="text size-mini block">
+                                    引渡時期
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_delivery_time" id="input-tokushoho-delivery-time" rows="2" cols="50">{{ old('tokushoho_delivery_time', $school->tokushoho_delivery_time) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-payment-method" class="text size-mini block">
+                                    お支払い方法
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_payment_method" id="input-tokushoho-payment-method" rows="2" cols="50">{{ old('tokushoho_payment_method', $school->tokushoho_payment_method) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-payment-period" class="text size-mini block">
+                                    決済期間
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_payment_period" id="input-tokushoho-payment-period" rows="2" cols="50">{{ old('tokushoho_payment_period', $school->tokushoho_payment_period) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-price" class="text size-mini block">
+                                    販売価格
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_price" id="input-tokushoho-price" rows="2" cols="50">{{ old('tokushoho_price', $school->tokushoho_price) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-validity-period" class="text size-mini block">
+                                    お申込み有効期限
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_validity_period" id="input-tokushoho-validity-period" rows="2" cols="50">{{ old('tokushoho_validity_period', $school->tokushoho_validity_period) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-sales-quantity" class="text size-mini block">
+                                    販売数量
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_sales_quantity" id="input-tokushoho-sales-quantity" rows="2" cols="50">{{ old('tokushoho_sales_quantity', $school->tokushoho_sales_quantity) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-content-body-item">
+                            <div class="inputset">
+                                <label for="input-tokushoho-usage-method" class="text size-mini block">
+                                    ご利用方法
+                                </label>
+                                <div class="text size-middle block">
+                                    <textarea name="tokushoho_usage_method" id="input-tokushoho-usage-method" rows="2" cols="50">{{ old('tokushoho_usage_method', $school->tokushoho_usage_method) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <hr>
 
                 <div class="edit-footer">
