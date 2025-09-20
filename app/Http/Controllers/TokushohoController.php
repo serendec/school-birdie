@@ -16,7 +16,7 @@ class TokushohoController extends Controller
     public function show()
     {
         $school = Auth::user()->school;
-        
+
         // 特商法情報が未設定の場合はデフォルト値を設定
         $tokushohoData = [
             'company_name' => $school->tokushoho_company_name ?? $school->name,

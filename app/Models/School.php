@@ -104,7 +104,7 @@ class School extends Model
         $school->tel = $request->tel;
         $school->tel_available_time = $request->tel_available_time;
         $school->email = $request->email;
-        
+
         // 特商法関連の情報を更新
         $school->tokushoho_company_name = $request->tokushoho_company_name;
         $school->tokushoho_address = $request->tokushoho_address;
@@ -120,7 +120,7 @@ class School extends Model
         $school->tokushoho_validity_period = $request->tokushoho_validity_period;
         $school->tokushoho_sales_quantity = $request->tokushoho_sales_quantity;
         $school->tokushoho_usage_method = $request->tokushoho_usage_method;
-        
+
         $school->save();
 
         return $school;

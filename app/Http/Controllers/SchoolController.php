@@ -110,7 +110,7 @@ class SchoolController extends Controller
         $overStorage = false;
         if (Auth::user()->school->storage_usage && Auth::user()->school->storage_usage > 0){
             $storageUsage = Auth::user()->school->storage_usage;
-            
+
             if (config("school.{$schoolId}")
                 && config("school.{$schoolId}")['storage_limit'] > 0
                 && Auth::user()->school->storage_usage > config("school.{$schoolId}")['storage_limit']){
