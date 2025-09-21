@@ -23,6 +23,9 @@
             <li>
                 <strong>電話番号:</strong>
                 {{ $tokushohoData['tel'] }}
+                @if(Auth::user()->school->tel_available_time)
+                    <br>受付時間：{{ Auth::user()->school->tel_available_time }}
+                @endif
             </li>
             @endif
 
