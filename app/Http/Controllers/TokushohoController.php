@@ -22,7 +22,7 @@ class TokushohoController extends Controller
         $tokushohoData = [
             'company_name' => $school->tokushoho_company_name ?? $school->name,
             'address' => $school->tokushoho_address,
-            'tel' => $school->tokushoho_tel ?? $school->tel,
+            'tel' => $school->tokushoho_tel ?? ($school->tel . ($school->tel_available_time ? '　' . $school->tel_available_time : '')),
             'email' => $school->tokushoho_email ?? $school->email,
             'representative' => $school->tokushoho_representative,
             'additional_fees' => $school->tokushoho_additional_fees,
