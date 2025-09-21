@@ -18,11 +18,12 @@ class TokushohoController extends Controller
         $school = Auth::user()->school;
 
         // 特商法情報は入力された項目のみ表示するため、デフォルト値は設定しない
+        // ただし、販売事業所名、電話番号、メールアドレスは未入力の場合はスクールの基本情報を使用
         $tokushohoData = [
-            'company_name' => $school->tokushoho_company_name,
+            'company_name' => $school->tokushoho_company_name ?? $school->name,
             'address' => $school->tokushoho_address,
-            'tel' => $school->tokushoho_tel,
-            'email' => $school->tokushoho_email,
+            'tel' => $school->tokushoho_tel ?? $school->tel,
+            'email' => $school->tokushoho_email ?? $school->email,
             'representative' => $school->tokushoho_representative,
             'additional_fees' => $school->tokushoho_additional_fees,
             'refund_policy' => $school->tokushoho_refund_policy,

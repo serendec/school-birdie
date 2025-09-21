@@ -185,7 +185,6 @@
                                 <div class="text size-middle block">
                                     <textarea name="tokushoho_additional_fees" id="input-tokushoho-additional-fees" rows="2" cols="50">{{ old('tokushoho_additional_fees', $school->tokushoho_additional_fees) }}</textarea>
                                 </div>
-                                <div class="text size-mini block">未入力の場合は「なし」が表示されます</div>
                             </div>
                         </div>
                         <div class="detail-content-body-item">
