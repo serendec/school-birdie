@@ -35,7 +35,7 @@ class SchoolController extends Controller
             'top_img'            => 'image|mimes:png,jpg,jpeg|max:2048|nullable',
             'tokushoho_company_name' => 'string|max:255|nullable',
             'tokushoho_address' => 'string|nullable',
-            'tokushoho_tel' => 'string|max:13|nullable',
+            'tokushoho_tel' => 'string|nullable',
             'tokushoho_email' => 'string|max:255|nullable',
             'tokushoho_representative' => 'string|max:255|nullable',
             'tokushoho_additional_fees' => 'string|nullable',

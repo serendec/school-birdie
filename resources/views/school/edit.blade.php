@@ -150,7 +150,7 @@
                                     電話番号
                                 </label>
                                 <div class="text size-middle block">
-                                    <input type="text" id="input-tokushoho-tel" name="tokushoho_tel" value="{{ old('tokushoho_tel', $school->tokushoho_tel ?? $school->tel) }}" size="13" />
+                                    <input type="text" id="input-tokushoho-tel" name="tokushoho_tel" value="{{ old('tokushoho_tel', $school->tokushoho_tel ?? $school->tel) }}" />
                                 </div>
                             </div>
                         </div>
