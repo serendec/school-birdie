@@ -130,9 +130,8 @@
                                     販売事業所名
                                 </label>
                                 <div class="text size-middle block">
-                                    <input type="text" id="input-tokushoho-company-name" name="tokushoho_company_name" value="{{ old('tokushoho_company_name', $school->tokushoho_company_name) }}" size="40" />
+                                    <input type="text" id="input-tokushoho-company-name" name="tokushoho_company_name" value="{{ old('tokushoho_company_name', $school->tokushoho_company_name ?? $school->name) }}" size="40" />
                                 </div>
-                                <div class="text size-mini block">未入力の場合はスクール名が使用されます</div>
                             </div>
                         </div>
                         <div class="detail-content-body-item">
@@ -151,9 +150,8 @@
                                     電話番号
                                 </label>
                                 <div class="text size-middle block">
-                                    <input type="text" id="input-tokushoho-tel" name="tokushoho_tel" value="{{ old('tokushoho_tel', $school->tokushoho_tel) }}" size="13" />
+                                    <input type="text" id="input-tokushoho-tel" name="tokushoho_tel" value="{{ old('tokushoho_tel', $school->tokushoho_tel ?? $school->tel) }}" size="13" />
                                 </div>
-                                <div class="text size-mini block">未入力の場合はお問い合わせ先電話番号が使用されます</div>
                             </div>
                         </div>
                         <div class="detail-content-body-item">
@@ -162,9 +160,8 @@
                                     メールアドレス
                                 </label>
                                 <div class="text size-middle block">
-                                    <input type="text" id="input-tokushoho-email" name="tokushoho_email" value="{{ old('tokushoho_email', $school->tokushoho_email) }}" size="40" />
+                                    <input type="text" id="input-tokushoho-email" name="tokushoho_email" value="{{ old('tokushoho_email', $school->tokushoho_email ?? $school->email) }}" size="40" />
                                 </div>
-                                <div class="text size-mini block">未入力の場合はお問い合わせ先メールアドレスが使用されます</div>
                             </div>
                         </div>
                         <div class="detail-content-body-item">
