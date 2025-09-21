@@ -5,14 +5,21 @@
     <div class="tokushoho-content">
         <h1>特定商取引法に基づく表記</h1>
         <ul class="tokushoho-list">
+            @if(!empty($tokushohoData['company_name']))
             <li>
                 <strong>販売事業所:</strong>
                 {{ $tokushohoData['company_name'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['address']))
             <li>
                 <strong>所在地:</strong>
                 {{ $tokushohoData['address'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['tel']))
             <li>
                 <strong>電話番号:</strong>
                 {{ $tokushohoData['tel'] }}
@@ -20,50 +27,84 @@
                     <br>受付時間：{{ Auth::user()->school->tel_available_time }}
                 @endif
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['email']))
             <li>
                 <strong>メールアドレス:</strong>
                 <a href="mailto:{{ $tokushohoData['email'] }}">{{ $tokushohoData['email'] }}</a>
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['representative']))
             <li>
                 <strong>運営統括責任者:</strong>
                 {{ $tokushohoData['representative'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['additional_fees']))
             <li>
                 <strong>追加手数料等の追加料金:</strong>
                 {{ $tokushohoData['additional_fees'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['refund_policy']))
             <li>
                 <strong>返金ポリシー:</strong>
                 {{ $tokushohoData['refund_policy'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['delivery_time']))
             <li>
                 <strong>引渡時期:</strong>
                 {{ $tokushohoData['delivery_time'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['payment_method']))
             <li>
                 <strong>お支払い方法:</strong>
                 {{ $tokushohoData['payment_method'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['payment_period']))
             <li>
                 <strong>決済期間:</strong>
                 {{ $tokushohoData['payment_period'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['price']))
             <li>
                 <strong>販売価格:</strong>
                 {{ $tokushohoData['price'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['validity_period']))
             <li>
                 <strong>お申込み有効期限:</strong>
                 {{ $tokushohoData['validity_period'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['sales_quantity']))
             <li>
                 <strong>販売数量:</strong>
                 {{ $tokushohoData['sales_quantity'] }}
             </li>
+            @endif
+
+            @if(!empty($tokushohoData['usage_method']))
             <li>
                 <strong>ご利用方法:</strong>
                 {{ $tokushohoData['usage_method'] }}
             </li>
+            @endif
         </ul>
     </div>
 </div>

@@ -39,31 +39,6 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     @vite(['resources/scss/app.scss'])
-    <style>
-        .site-footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .tokushoho-link {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .tokushoho-link:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .site-footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
     @yield('css')
 </head>
 
@@ -112,10 +87,13 @@
 
     <div class="site-footer">
         <div class="site-footer-content">
-            <span class="text size-small"> &copy SERENDEC</span>
             @if(Auth::check() && Route::has('tokushoho.show'))
-                <a href="{{ route('tokushoho.show') }}" class="text size-small tokushoho-link">特定商取引法に基づく表記</a>
+                <div class="tokushoho-link">
+                    <a href="{{ route('tokushoho.show') }}">特定商取引法に基づく表記</a>
+                </div>
             @endif
+
+            <span class="text size-small"> &copy SERENDEC</span>
         </div>
     </div>
 

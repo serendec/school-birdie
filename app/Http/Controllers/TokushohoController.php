@@ -17,22 +17,22 @@ class TokushohoController extends Controller
     {
         $school = Auth::user()->school;
 
-        // 特商法情報が未設定の場合はデフォルト値を設定
+        // 特商法情報は入力された項目のみ表示するため、デフォルト値は設定しない
         $tokushohoData = [
-            'company_name' => $school->tokushoho_company_name ?? $school->name,
-            'address' => $school->tokushoho_address ?? '',
-            'tel' => $school->tokushoho_tel ?? $school->tel,
-            'email' => $school->tokushoho_email ?? $school->email,
-            'representative' => $school->tokushoho_representative ?? '',
-            'additional_fees' => $school->tokushoho_additional_fees ?? 'なし',
-            'refund_policy' => $school->tokushoho_refund_policy ?? 'いかなる場合においても実施後の返金はできませんのでご了承ください。',
-            'delivery_time' => $school->tokushoho_delivery_time ?? '注文後すぐにご利用いただけます。',
-            'payment_method' => $school->tokushoho_payment_method ?? 'クレジットカード',
-            'payment_period' => $school->tokushoho_payment_period ?? 'クレジットカード決済はただちに処理されます。',
-            'price' => $school->tokushoho_price ?? '各商品ページをご参照ください。',
-            'validity_period' => $school->tokushoho_validity_period ?? '3か月',
-            'sales_quantity' => $school->tokushoho_sales_quantity ?? '無制限',
-            'usage_method' => $school->tokushoho_usage_method ?? '当方よりご利用案内をお送りいたします。'
+            'company_name' => $school->tokushoho_company_name,
+            'address' => $school->tokushoho_address,
+            'tel' => $school->tokushoho_tel,
+            'email' => $school->tokushoho_email,
+            'representative' => $school->tokushoho_representative,
+            'additional_fees' => $school->tokushoho_additional_fees,
+            'refund_policy' => $school->tokushoho_refund_policy,
+            'delivery_time' => $school->tokushoho_delivery_time,
+            'payment_method' => $school->tokushoho_payment_method,
+            'payment_period' => $school->tokushoho_payment_period,
+            'price' => $school->tokushoho_price,
+            'validity_period' => $school->tokushoho_validity_period,
+            'sales_quantity' => $school->tokushoho_sales_quantity,
+            'usage_method' => $school->tokushoho_usage_method,
         ];
 
         return view('tokushoho.show', compact('tokushohoData'));
