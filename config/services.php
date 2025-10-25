@@ -37,11 +37,23 @@ return [
         'site_key' => env('RECAPTCHA_SITE_KEY'),
         'secret_key' => env('RECAPTCHA_SECRET_KEY'),
     ],
-    
+
     'stripe' => [
-        1 => [
-            'public_key' => env('SCHOOL1_STRIPE_KEY'),
-            'secret_key' => env('SCHOOL1_STRIPE_SECRET')
+        // 1 => [
+        //     'public_key' => env('SCHOOL1_STRIPE_KEY'),
+        //     'secret_key' => env('SCHOOL1_STRIPE_SECRET')
+        // ],
+        9 => [
+            'public_key' => env('SCHOOL_TEST_STRIPE_KEY'),
+            'secret_key' => env('SCHOOL_TEST_STRIPE_SECRET')
+        ],
+        10 => [
+            'public_key' => env('SCHOOL_10_STRIPE_KEY'),
+            'secret_key' => env('SCHOOL_10_STRIPE_SECRET')
+        ],
+        11 => [
+            'public_key' => env('SCHOOL_11_STRIPE_KEY'),
+            'secret_key' => env('SCHOOL_11_STRIPE_SECRET')
         ],
     ],
 ];
