@@ -12,7 +12,7 @@
     @endif
     <title>{{ config('app.name') }}</title>
     @yield('js')
-    @vite(['resources/scss/login.scss'])
+    <link href="{{ asset('css/style-login.css') }}?v={{ filemtime(public_path() . '/css/style-login.css') }}" rel="stylesheet">
     @yield('css')
 </head>
 <body>
