@@ -16,7 +16,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'バーディーちゃん'),
-
+    'version' => env('APP_VERSION', '1.1.0'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -196,7 +196,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
-        
+
     ],
 
     /*
