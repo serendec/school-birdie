@@ -15,6 +15,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\TokushohoController;
 use App\Http\Controllers\VideoAdviceController;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,6 +65,9 @@ Route::middleware('verified')->group(function(){
         // お問い合わせフォーム
         Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+        // 特商法ページ
+        Route::get('/tokushoho', [TokushohoController::class, 'show'])->name('tokushoho.show');
     });
 
     // アクセス制限：管理者

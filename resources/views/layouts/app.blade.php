@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,6 +39,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}?v={{ filemtime(public_path() . '/css/style.css') }}" rel="stylesheet">
     @yield('css')
+
+    <style>
+        {{-- 特商法リンクのスタイル --}}
+        .tokushoho-link {
+            margin-bottom: 10px;
+            a {
+                color: #fff!important;
+                text-decoration: none;
+            }
+        }
+    </style>
 </head>
 
 <body @if (Request::routeIs('home')) id="home" @endif class="drawer drawer--right">
@@ -86,8 +96,15 @@
     </main>
 
     <div class="site-footer">
-        <span class="text size-small"> &copy SERENDEC
-        </span>
+        <div class="site-footer-content">
+            @if(Auth::check() && Route::has('tokushoho.show'))
+                <div class="tokushoho-link">
+                    <a href="{{ route('tokushoho.show') }}">特定商取引法に基づく表記</a>
+                </div>
+            @endif
+
+            <span class="text size-small"> &copy SERENDEC</span>
+        </div>
     </div>
 
     @yield('js-footer')
