@@ -47,6 +47,9 @@ createBreadcrumb('school.index', 'home', 'ホーム');
 createBreadcrumb('school.edit', 'school.index', 'スクール情報');
 createBreadcrumb('school.contract', 'home', 'ホーム');
 
+// 特商法ページ
+createBreadcrumb('tokushoho.show', 'home', 'ホーム');
+
 // お問い合わせ
 createBreadcrumb('contact.create', 'home', 'ホーム');
 
@@ -108,7 +111,7 @@ if (isset(request()->route()->id)){
     createBreadcrumb('video_advice.edit', 'video_advice.index', '動画添削');
 }
 
-// ゴルフ講座関連
+// 動画講座関連
 createBreadcrumb('course.index', 'home', 'ホーム');
 createBreadcrumb('course.create', 'course.index', '講座');
 createBreadcrumb('course.show', 'course.index', '講座');
