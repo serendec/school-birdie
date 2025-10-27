@@ -16,6 +16,26 @@ class PaymentService
 
     public function createSubscription($user, $stripePlanId, $paymentToken)
     {
+        // plan ではなく price を必要とする。prod_ が渡ってきた場合は対応する price を解決する
+        $stripePriceId = $stripePlanId;
+        if (is_string($stripePlanId) && str_starts_with($stripePlanId, 'prod_')) {
+            // まずはデフォルト価格を取得（存在すれば最短）
+            $product = $this->stripe->products->retrieve($stripePlanId, ['expand' => ['default_price']]);
+            if (isset($product->default_price) && isset($product->default_price->id)) {
+                $stripePriceId = $product->default_price->id;
+            } else {
+                // デフォルト価格が無い場合は、関連する有効な価格を1件取得
+                $prices = $this->stripe->prices->all([
+                    'product' => $stripePlanId,
+                    'active' => true,
+                    'limit' => 1,
+                ]);
+                if (isset($prices->data[0]->id)) {
+                    $stripePriceId = $prices->data[0]->id;
+                }
+            }
+        }
+
         // Create a new customer in Stripe
         $customer = $this->stripe->customers->create([
             'name'  => $user['family_name'].' '.$user['first_name'],
@@ -56,7 +76,7 @@ class PaymentService
         $subscription = $this->stripe->subscriptions->create([
             'customer' => $customer->id,
             'items' => [
-                ['plan' => $stripePlanId]
+                ['price' => $stripePriceId]
             ],
             'billing_cycle_anchor' => $endOfMonthTimestamp,
             'trial_end' => $endOfMonthTimestamp,
