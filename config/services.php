@@ -43,5 +43,9 @@ return [
             'public_key' => env('SCHOOL1_STRIPE_KEY'),
             'secret_key' => env('SCHOOL1_STRIPE_SECRET')
         ],
+        8 => [
+            'public_key' => env('GOLFLINKSNAGOYA_STRIPE_KEY'),
+            'secret_key' => env('GOLFLINKSNAGOYA_STRIPE_SECRET')
+        ],
     ],
 ];
