@@ -16,7 +16,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'バーディーちゃん'),
-    'version' => env('APP_VERSION', '1.1.0'),
+    'version' => env('APP_VERSION', '1.2.0'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
