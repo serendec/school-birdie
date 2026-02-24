@@ -55,5 +55,21 @@ return [
             'public_key' => env('SCHOOL_11_STRIPE_KEY'),
             'secret_key' => env('SCHOOL_11_STRIPE_SECRET')
         ],
+        12 => [
+            'public_key' => env('SCHOOL_12_STRIPE_KEY'),
+            'secret_key' => env('SCHOOL_12_STRIPE_SECRET')
+        ],
+        13 => [
+            'public_key' => env('SCHOOL_13_STRIPE_KEY'),
+            'secret_key' => env('SCHOOL_13_STRIPE_SECRET')
+        ],
+        14 => [
+            'public_key' => env('SCHOOL_14_STRIPE_KEY'),
+            'secret_key' => env('SCHOOL_14_STRIPE_SECRET')
+        ],
+        15 => [
+            'public_key' => env('SCHOOL_15_STRIPE_KEY'),
+            'secret_key' => env('SCHOOL_15_STRIPE_SECRET')
+        ],
     ],
 ];
