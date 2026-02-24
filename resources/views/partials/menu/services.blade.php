@@ -39,7 +39,7 @@
                         <span class="material-symbols-outlined">
                             school
                         </span>
-                        <span class="text">ゴルフ講座</span>
+                        <span class="text">動画講座</span>
                     </span>
                 </a>
             </li>

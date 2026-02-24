@@ -7,13 +7,13 @@
     <div class="imagebg" style="background-image: url({{ $top_img_path }});">
         <div class="imagebg-gra">
             <div class="imagebg-gra-content">
-                <h1 class="hd-1">ゴルフ講座</h1>
+                <h1 class="hd-1">動画講座</h1>
 
                 @can('isStudent')
                     <div class="listcontrol">
                         <div class="listcontrol-left">
                             <p class="text size-mini">
-                                いつでも閲覧可能なゴルフ講座を利用して<br
+                                いつでも閲覧可能な動画講座を利用して<br
                                 class="sp"
                             />ステップアップしましょう。
                             </p>

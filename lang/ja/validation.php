@@ -176,7 +176,7 @@ return [
             'required' => '不正なアクセスです。',
         ],
         'classroom_lecture_available' => [
-            'required' => 'ゴルフ講座の利用を選択してください。',
+            'required' => '動画講座の利用を選択してください。',
         ],
         'lesson_record_available' => [
             'required' => 'レッスン記録の利用を選択してください。',

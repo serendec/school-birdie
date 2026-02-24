@@ -13,7 +13,6 @@ $color_outline: #f0f0f0;
 $color_line: #879f7f;
 $color_line_lighter: #c3cfbf;
 $color_line_lightest: #e2e7df;
-$color_blue_light: #4285f4;
 
 // breakpoint
 $bp_1200: 1200px;
@@ -407,38 +406,6 @@ $elem: "listmenu";
     }
 }
 
-$elem: "listbuttons";
-.#{$elem} {
-    display: flex;
-    width: 100%;
-
-    > .element {
-        width: 33.3%;
-        cursor: pointer;
-        font-size: 12px;
-
-        &.left {
-            text-align: left;
-        }
-
-        &.right {
-            text-align: right;
-        }
-
-        a {
-            font-size: 14px;
-        }
-        span {
-            font-size: 14px;
-        }
-    }
-
-    > .btn-complete {
-        text-align: center;
-    }
-}
-
-
 $elem: "button";
 .#{$elem} {
     background-color: $color_link;
@@ -447,6 +414,7 @@ $elem: "button";
     text-decoration: none;
     padding: 0 16px;
     border-radius: 8px;
+    display: inline-block;
     height: 44px;
     line-height: 44px;
     font-size: 16px;
@@ -513,19 +481,6 @@ $elem: "button";
         margin-left: 15px;
         padding: 0 12px;
         height: 36px;
-    }
-
-    &-previous {
-        &:before {
-            content: "◀";
-            margin-right: 2px;
-        }
-    }
-    &-next {
-        &:after {
-            content: "▶";
-            margin-left: 2px;
-        }
     }
 
     &.width {
@@ -781,12 +736,6 @@ $elem: "texticon";
             border-color: $color_alert;
             background-color: $color_alert;
             color: $color_white;
-        }
-        &-not-yet {
-            border-color: $color_blue_light;
-            background-color: $color_blue_light;
-            color: $color_white;
-
         }
     }
 }
@@ -1299,71 +1248,6 @@ $elem: "movie";
         margin-top: 0;
     }
 
-    .play-button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        border: none;
-        padding: 15px 18px 15px 20px;
-        font-size: 18px;
-        cursor: pointer;
-        z-index: 10;
-        opacity: 0;
-    }
-    .play-button.show {
-        z-index: 11;
-        opacity: 1;
-    }
-
-    .stop-button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        border: none;
-        padding: 15px 18px 15px 20px;
-        font-size: 18px;
-        cursor: pointer;
-        z-index: 10;
-        opacity: 0;
-    }
-    .stop-button.show {
-        z-index: 11;
-        opacity: 1;
-    }
-
-    .speed-control {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-    }
-
-    .speed-control label {
-        font-size: 12px;
-        color: white;
-    }
-
-    .speed-control select#speedControl {
-        width: 60px;
-        height: unset;
-        padding: 5px;
-        font-size: 12px;
-        cursor: pointer;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .speed-control select#speedControl:hover {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-
     iframe {
         position: absolute;
         top: 0;
@@ -1646,7 +1530,7 @@ $elem: "modal";
         margin-top: 20px;
         height: 30px;
     }
-
+    
     .progress-bar {
         height: 100%;
         background: #76c7c0;
@@ -1654,7 +1538,7 @@ $elem: "modal";
         transition: width 0.4s ease;
         border-radius: 25px;
     }
-
+    
     #uploadStatus {
         font-size: 1.2em;
         margin-bottom: 10px;
@@ -1743,7 +1627,7 @@ table.stripe-payment-situation {
     border-top-color: #34c759;
     animation: spin 1s linear infinite;
     margin-left: 5px;
-
+    
     &-middle {
         width: 40px;
         height: 40px;
@@ -1829,18 +1713,5 @@ table.stripe-payment-situation {
         &.select2-selection {
             height: 40px;
         }
-    }
-}
-
-$elem: "check-list";
-.#{$elem} {
-    display: inline-block;
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-    margin-block-start: 0;
-
-    li {
-        display: inline-block;
-        width: 150px;
     }
 }

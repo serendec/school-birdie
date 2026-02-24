@@ -53,7 +53,7 @@ if (selectSubTeacher) {
 
         if (value !== ""){
             let teacherList = document.getElementById('sub_teacher-list');
-            
+
             // 選択状況のチェック
             let existingTag = Array.from(teacherList.children).find(child => {
                 let hiddenInput = child.querySelector('input[type="hidden"]');

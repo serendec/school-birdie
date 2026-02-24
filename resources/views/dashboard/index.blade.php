@@ -21,7 +21,7 @@
             @can('isStudent')
                 <div class="indexbox">
                     @if ($recommendVideoAdvice)
-                        <div>
+                    {{-- <div>
                             <div class="hd-2">ピックアップ</div>
                             <a class="card mt-8" href="{{ route('video_advice.create') }}">
                                 <span class="card-content">
@@ -48,8 +48,10 @@
                                     </span>
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
                     @endif
+
+
 
                     {{-- <div>
                         <div class="hd-2">今日のおすすめ講座</div>
