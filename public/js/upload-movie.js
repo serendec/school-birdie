@@ -25,11 +25,12 @@ window.onload = function() {
 
         // 動画をアップロードする場合のみ、カスタムアップロード処理を実行
         if (fileInput && fileInput.files.length > 0) {
+            const acceptsVideo = (fileInput.accept || '').indexOf('video') !== -1;
             const isVideoFile = function(f) {
                 return f.type.startsWith('video/')
                     || /\.(mov|mp4|m4v|3gp|avi|mkv|webm)$/i.test(f.name);
             };
-            const hasVideo = Array.from(fileInput.files).some(isVideoFile);
+            const hasVideo = acceptsVideo || Array.from(fileInput.files).some(isVideoFile);
             if (hasVideo) {
                 const xhr = new XMLHttpRequest();
                 const progressBar = document.querySelector('.progress-bar');
@@ -58,9 +59,15 @@ window.onload = function() {
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status >= 200 && xhr.status < 300) {
-                            const response = JSON.parse(xhr.responseText);
+                            var response;
+                            try { response = JSON.parse(xhr.responseText); } catch(e) {
+                                uploadStatus.innerText = 'アップロードに失敗しました。時間をおいて再度お試しください。';
+                                if (spinnerContainer) spinnerContainer.style.display = 'none';
+                                return;
+                            }
                             if (response.result === 'error') {
                                 uploadStatus.innerText = 'アップロードに失敗しました。時間をおいて再度お試しください。';
+                                if (spinnerContainer) spinnerContainer.style.display = 'none';
                                 return;
                             }
                             
@@ -85,6 +92,7 @@ window.onload = function() {
                         } else {
                             // エラーメッセージを表示
                             uploadStatus.innerText = 'アップロードに失敗しました。時間をおいて再度お試しください。';
+                            if (spinnerContainer) spinnerContainer.style.display = 'none';
                         }
                     }
                 };

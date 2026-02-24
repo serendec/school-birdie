@@ -100,7 +100,7 @@ class VideoAdviceController extends Controller
         $validator = Validator::make($request->all(), [
             'title'    => ['required', 'string', 'max:255'],
             'video'    => ['array', 'max:10'],
-            'video.*'  => ['required', 'mimes:mp4,mov,3gp,avi,webm,qt'],
+            'video.*'  => ['required', 'mimetypes:video/mp4,video/quicktime,video/3gpp,video/x-msvideo,video/webm,video/mpeg,video/x-matroska,application/octet-stream'],
             'question' => ['required', 'string'],
         ]);
         if ($validator->fails()) {
@@ -198,7 +198,7 @@ class VideoAdviceController extends Controller
             'id'       => ['required', 'integer', 'exists:video_advice,id'],
             'title'    => ['required', 'string', 'max:255'],
             'video'    => ['array', 'max:10'],
-            'video.*'  => ['required', 'mimes:mp4,mov,3gp,avi,webm,qt'],
+            'video.*'  => ['required', 'mimetypes:video/mp4,video/quicktime,video/3gpp,video/x-msvideo,video/webm,video/mpeg,video/x-matroska,application/octet-stream'],
             'question' => ['required', 'string'],
         ]);
         if ($validator->fails()) {
