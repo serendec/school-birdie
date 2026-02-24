@@ -158,6 +158,11 @@
                                     </span>
                                 </span>
                             </span>
+                            @if (!empty($lessonRecord->summary))
+                                <span class="card-summary">
+                                    <span class="text size-mini">{{ Str::limit(strip_tags($lessonRecord->summary), 100) }}</span>
+                                </span>
+                            @endif
                             <span class="tagbox">
                                 @foreach ($lessonRecord->tags as $tag)
                                     <span class="tag">{{ $tag->name }}</span>

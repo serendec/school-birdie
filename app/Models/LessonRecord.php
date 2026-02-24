@@ -72,23 +72,23 @@ class LessonRecord extends Model
                     ->whereHas('teacher', function ($query) use ($schoolId) {
                         $query->bySchoolId($schoolId);
                     })
-                    ->select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status')
-                    ->orderBy('lesson_records.lesson_date', 'desc')
+                    ->select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status', 'lesson_records.summary')
+                    ->orderBy('lesson_records.updated_at', 'desc')
                     ->paginate($perPage);
     }
 
     /**
      * レッスン記録をタグ情報を含めて検索
-     * 
+     *
      * @param int $schoolId
      * @param Request $request
      * @param int $perPage
-     * 
+     *
      * @return Illuminate\Pagination\LengthAwarePaginator|null
      */
     public static function searchPaginatedList(int $schoolId, Request $request, int $perPage = 10): ?LengthAwarePaginator
     {
-        $list = self::select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status')
+        $list = self::select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status', 'lesson_records.summary')
                     ->with([
                         'tags',
                         'student:id,family_name,first_name,school_id,icon',
@@ -134,7 +134,7 @@ class LessonRecord extends Model
             $list->where('post_status', $request->post_status);
         }
 
-        return $list->orderBy('lesson_records.lesson_date', 'desc')
+        return $list->orderBy('lesson_records.updated_at', 'desc')
                     ->paginate($perPage);
     }
 
@@ -157,8 +157,8 @@ class LessonRecord extends Model
                         $query->where('student_id', $studentId);
                     })
                     ->where('post_status', 'publish')
-                    ->select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status')
-                    ->orderBy('lesson_records.lesson_date', 'desc')
+                    ->select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status', 'lesson_records.summary')
+                    ->orderBy('lesson_records.updated_at', 'desc')
                     ->paginate($perPage);
     }
 
@@ -174,7 +174,7 @@ class LessonRecord extends Model
      */
     public static function searchStudentPaginatedList(int $studentId, Request $request, array $unreadLessonRecordIds = [], int $perPage = 10): ?LengthAwarePaginator
     {
-        $list = self::select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status')
+        $list = self::select('lesson_records.id', 'lesson_records.teacher_id', 'lesson_records.student_id', 'lesson_records.title', 'lesson_records.lesson_date', 'lesson_records.post_status', 'lesson_records.summary')
                     ->with([
                         'tags',
                         'student:id,family_name,first_name,icon',
@@ -210,7 +210,7 @@ class LessonRecord extends Model
             $list->whereIn('id', $unreadLessonRecordIds);
         }
 
-        return $list->orderBy('lesson_records.lesson_date', 'desc')
+        return $list->orderBy('lesson_records.updated_at', 'desc')
                     ->paginate($perPage);
     }
 
@@ -284,7 +284,7 @@ class LessonRecord extends Model
         return self::where('student_id', $studentId)
                     ->where('lesson_date', '>', $lessonDate)
                     ->where('post_status', 'publish')
-                    ->orderBy('lesson_date', 'desc')
+                    ->orderBy('lesson_date')
                     ->first();
     }
 
