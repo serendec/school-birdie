@@ -52,7 +52,7 @@ class CourseController extends Controller
                 'exists:course_categories,id',
                 Rule::exists('course_categories', 'id')->where('school_id', $school_id),
             ],
-            'video' => 'nullable|mimes:mp4,mov,3gp,av',
+            'video' => 'nullable|mimes:mp4,mov,3gp,avi,webm,qt',
             'content' => 'nullable',
         ]);
         $validator->setAttributeNames([
@@ -165,7 +165,7 @@ class CourseController extends Controller
                 'exists:course_categories,id',
                 Rule::exists('course_categories', 'id')->where('school_id', Auth::user()->school_id),
             ],
-            'video' => 'nullable|mimes:mp4,mov,3gp,av',
+            'video' => 'nullable|mimes:mp4,mov,3gp,avi,webm,qt',
             'content' => 'nullable',
         ]);
         if ($validator->fails()) {

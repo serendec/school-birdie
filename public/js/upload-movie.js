@@ -25,8 +25,12 @@ window.onload = function() {
 
         // 動画をアップロードする場合のみ、カスタムアップロード処理を実行
         if (fileInput && fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            if (file.type.startsWith('video/')) {
+            const isVideoFile = function(f) {
+                return f.type.startsWith('video/')
+                    || /\.(mov|mp4|m4v|3gp|avi|mkv|webm)$/i.test(f.name);
+            };
+            const hasVideo = Array.from(fileInput.files).some(isVideoFile);
+            if (hasVideo) {
                 const xhr = new XMLHttpRequest();
                 const progressBar = document.querySelector('.progress-bar');
                 const progressContainer = document.querySelector('.progress');
