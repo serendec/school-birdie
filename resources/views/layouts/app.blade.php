@@ -49,12 +49,17 @@
                 text-decoration: none;
             }
         }
+        .site-footer-app-name {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
 <body @if (Request::routeIs('home')) id="home" @endif class="drawer drawer--right">
     @include('partials.menu.drawer')
-    
+
     <div class="site-header">
         <div class="site-header-left">
             <div class="namebox">
@@ -89,7 +94,7 @@
             @endforeach
         </div>
     @endif
-    
+
     <main class="site-body">
         @include('partials.message')
         @yield('content')
@@ -97,6 +102,9 @@
 
     <div class="site-footer">
         <div class="site-footer-content">
+            <div class="site-footer-app-name">
+            オンラインレッスンシステム「バーディーちゃん」
+            </div>
             @if(Auth::check() && Route::has('tokushoho.show'))
                 <div class="tokushoho-link">
                     <a href="{{ route('tokushoho.show') }}">特定商取引法に基づく表記</a>
